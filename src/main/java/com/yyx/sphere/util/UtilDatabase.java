@@ -75,7 +75,7 @@ public class UtilDatabase {
             id = id * 10 + cdkey.charAt(i) % 10;
         }
 
-        long cdkey_id = 0;
+        long cdkey_id;
         try(Connection conn = connectionGet()){
             try(PreparedStatement ps = conn.prepareStatement("SELECT id, usertype FROM license WHERE cdkey=?")){
                 ps.setObject(1, license.cdkey);
