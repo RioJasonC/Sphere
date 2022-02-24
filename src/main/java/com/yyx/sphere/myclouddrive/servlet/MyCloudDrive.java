@@ -1,0 +1,17 @@
+package com.yyx.sphere.myclouddrive.servlet;
+
+import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+
+@WebServlet(name = "MyCloudDrive", urlPatterns = "/myclouddrive")
+public class MyCloudDrive extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    public void destroy() {
+    }
+}
