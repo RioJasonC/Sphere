@@ -12,6 +12,7 @@ public class MyCloudDrive extends HttpServlet {
 
     }
 
+    @Override
     public void destroy() {
     }
 }
