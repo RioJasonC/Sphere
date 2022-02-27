@@ -1,9 +1,9 @@
-package com.yyx.sphere.util;
+package com.riojasonc.sphere.util;
 
 import java.sql.*;
-import com.yyx.sphere.data.License;
-import com.yyx.sphere.data.User;
-import com.yyx.sphere.global.Constant;
+import com.riojasonc.sphere.data.License;
+import com.riojasonc.sphere.data.User;
+import com.riojasonc.sphere.global.Constant;
 
 public class UtilDatabase {
     private static final String url = "jdbc:mysql://localhost:3306/sphere?useSSL=false&characterEncoding=utf8";

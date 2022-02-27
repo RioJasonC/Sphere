@@ -1,7 +1,7 @@
-package com.yyx.sphere.myclouddrive.servlet;
+package com.riojasonc.sphere.myclouddrive.servlet;
 
-import com.yyx.sphere.global.Constant;
-import com.yyx.sphere.util.UtilDatabase;
+import com.riojasonc.sphere.global.Constant;
+import com.riojasonc.sphere.util.UtilDatabase;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

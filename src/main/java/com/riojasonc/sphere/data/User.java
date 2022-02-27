@@ -1,4 +1,4 @@
-package com.yyx.sphere.data;
+package com.riojasonc.sphere.data;
 
 public class User{
     public static final int nameMaxLength = 24;

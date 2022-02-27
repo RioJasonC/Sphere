@@ -1,4 +1,4 @@
-package com.yyx.sphere.data;
+package com.riojasonc.sphere.data;
 
 public class License {
     private static final int cdkeyLength = 19;

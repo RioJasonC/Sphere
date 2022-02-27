@@ -1,4 +1,4 @@
-package com.yyx.sphere.global;
+package com.riojasonc.sphere.global;
 
 public class Constant {
     public static final int Success = 0;
