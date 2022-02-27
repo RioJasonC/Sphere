@@ -43,8 +43,8 @@ public class Login extends HttpServlet {
             PrintWriter pw = response.getWriter();
             String msg = "";
             switch (result){
-                case Constant.Error.Login.front: msg = "Id or Name is invalid."; break;
-                case Constant.Error.Login.password: msg = "Password is invalid."; break;
+                case Constant.ERROR.LOGIN.FRONT: msg = "Id or Name is invalid."; break;
+                case Constant.ERROR.LOGIN.PASSWORD: msg = "Password is invalid."; break;
                 default: msg = "Unknown Error.";
             }
             pw.write("<h1>" + msg + "</h1>");
