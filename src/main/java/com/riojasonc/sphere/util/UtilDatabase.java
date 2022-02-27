@@ -8,7 +8,7 @@ import com.riojasonc.sphere.global.Constant;
 public class UtilDatabase {
     private static final String url = "jdbc:mysql://localhost:3306/sphere?useSSL=false&characterEncoding=utf8";
     private static final String user = "root";
-    private static final String password = "MySQL5410";
+    private static final String password = "MySQL5410*";
 
     private static Connection connectionGet() throws SQLException {
         return DriverManager.getConnection(url, user, password);
@@ -19,13 +19,16 @@ public class UtilDatabase {
             try(PreparedStatement ps = conn.prepareStatement("SELECT status FROM license WHERE cdkey=?")){
                 ps.setObject(1, license.cdkey);
                 try(ResultSet rs = ps.executeQuery()){
-                    if(!rs.next()) return Constant.ERROR.SIGNUP.CDKEY;//cdkey不存在
+                    if(!rs.next()) {
+                        return Constant.ERROR.SIGNUP.CDKEY;//cdkey不存在
+                    }
                     String status = rs.getString(1);
                     return status.equals("unused")  ? Constant.Success : Constant.ERROR.SIGNUP.CDKEYUSED;
                 }
             }
         }
     }//通行证激活判断（cdkey + status）
+
 
     public static void licenseActivate(License license) throws SQLException{
         try(Connection conn = connectionGet()){
@@ -43,7 +46,9 @@ public class UtilDatabase {
             try(PreparedStatement ps = conn.prepareStatement(mod ? "SELECT password FROM user_info WHERE id=?" : "SELECT password FROM user_info WHERE name=?")){
                 ps.setObject(1, inputFront);
                 try(ResultSet rs = ps.executeQuery()){
-                    if(!rs.next()) return Constant.ERROR.LOGIN.FRONT;//id或者name不存在
+                    if(!rs.next()) {
+                        return Constant.ERROR.LOGIN.FRONT;//id或者name不存在
+                    }
                     String password = rs.getString(1);
                     return inputPassword.equals(password) ? Constant.Success : Constant.ERROR.LOGIN.PASSWORD;//密码错误
                 }
@@ -57,9 +62,13 @@ public class UtilDatabase {
         License license = user.license;
 
         int length = name.length();
-        if(length == 0 || length > User.nameMaxLength) return Constant.ERROR.SIGNUP.NAME;
+        if(length == 0 || length > User.nameMaxLength) {
+            return Constant.ERROR.SIGNUP.NAME;
+        }
         length = password.length();
-        if(length == 0 || length > User.passwordMaxLength) return Constant.ERROR.SIGNUP.PASSWORD;
+        if(length == 0 || length > User.passwordMaxLength) {
+            return Constant.ERROR.SIGNUP.PASSWORD;
+        }
         return licenseActivateCheck(license);
     }//注册判断（name + password + cdkey）
 
@@ -71,7 +80,9 @@ public class UtilDatabase {
         String cdkey = license.cdkey;
         long id = cdkey.charAt(0) % 9 + 1;
         for(int i = 1; i < 11; i++){
-            if(cdkey.charAt(i) == '-') continue;
+            if(cdkey.charAt(i) == '-') {
+                continue;
+            }
             id = id * 10 + cdkey.charAt(i) % 10;
         }
 

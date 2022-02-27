@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "Login", urlPatterns = "/login")
+@WebServlet(name = "Login", urlPatterns = "/l   ogin")
 public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
