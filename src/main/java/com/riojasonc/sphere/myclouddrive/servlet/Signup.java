@@ -46,10 +46,10 @@ public class Signup extends HttpServlet {
             PrintWriter pw = response.getWriter();
             String msg = "";
             switch (result){
-                case Constant.Error.SignUp.name: msg = "Name is invalid."; break;
-                case Constant.Error.SignUp.password: msg = "Password is invalid."; break;
-                case Constant.Error.SignUp.cdkey: msg = "CDKey is invalid."; break;
-                case Constant.Error.SignUp.cdkeyused: msg = "CDKey had been used."; break;
+                case Constant.ERROR.SIGNUP.NAME: msg = "Name is invalid."; break;
+                case Constant.ERROR.SIGNUP.PASSWORD: msg = "Password is invalid."; break;
+                case Constant.ERROR.SIGNUP.CDKEY: msg = "CDKey is invalid."; break;
+                case Constant.ERROR.SIGNUP.CDKEYUSED: msg = "CDKey had been used."; break;
                 default: msg = "Unknown Error.";
             }
             pw.write("<h1>" + msg + "</h1>");

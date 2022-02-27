@@ -19,9 +19,9 @@ public class UtilDatabase {
             try(PreparedStatement ps = conn.prepareStatement("SELECT status FROM license WHERE cdkey=?")){
                 ps.setObject(1, license.cdkey);
                 try(ResultSet rs = ps.executeQuery()){
-                    if(!rs.next()) return Constant.Error.SignUp.cdkey;//cdkey不存在
+                    if(!rs.next()) return Constant.ERROR.SIGNUP.CDKEY;//cdkey不存在
                     String status = rs.getString(1);
-                    return status.equals("unused")  ? Constant.Success : Constant.Error.SignUp.cdkeyused;
+                    return status.equals("unused")  ? Constant.Success : Constant.ERROR.SIGNUP.CDKEYUSED;
                 }
             }
         }
@@ -43,9 +43,9 @@ public class UtilDatabase {
             try(PreparedStatement ps = conn.prepareStatement(mod ? "SELECT password FROM user_info WHERE id=?" : "SELECT password FROM user_info WHERE name=?")){
                 ps.setObject(1, inputFront);
                 try(ResultSet rs = ps.executeQuery()){
-                    if(!rs.next()) return Constant.Error.Login.front;//id或者name不存在
+                    if(!rs.next()) return Constant.ERROR.LOGIN.FRONT;//id或者name不存在
                     String password = rs.getString(1);
-                    return inputPassword.equals(password) ? Constant.Success : Constant.Error.Login.password;//密码错误
+                    return inputPassword.equals(password) ? Constant.Success : Constant.ERROR.LOGIN.PASSWORD;//密码错误
                 }
             }
         }
@@ -57,9 +57,9 @@ public class UtilDatabase {
         License license = user.license;
 
         int length = name.length();
-        if(length == 0 || length > User.nameMaxLength) return Constant.Error.SignUp.name;
+        if(length == 0 || length > User.nameMaxLength) return Constant.ERROR.SIGNUP.NAME;
         length = password.length();
-        if(length == 0 || length > User.passwordMaxLength) return Constant.Error.SignUp.password;
+        if(length == 0 || length > User.passwordMaxLength) return Constant.ERROR.SIGNUP.PASSWORD;
         return licenseActivateCheck(license);
     }//注册判断（name + password + cdkey）
 
