@@ -15,6 +15,9 @@ public class Constant {
             public static final int CDKEY = 6;//cdkey错误
             public static final int CDKEYUSED = 7;//cdkey已经被使用
         }
+        public class UTIL{
+            public static final int MYSQL = -1;//SQL出现问题
+        }
     }
 
     public Constant(){

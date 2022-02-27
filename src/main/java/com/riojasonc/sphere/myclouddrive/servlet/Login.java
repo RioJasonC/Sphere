@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "Login", urlPatterns = "/l   ogin")
+@WebServlet(name = "Login", urlPatterns = "/login")
 public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,6 +45,7 @@ public class Login extends HttpServlet {
             switch (result){
                 case Constant.ERROR.LOGIN.FRONT: msg = "Id or Name is invalid."; break;
                 case Constant.ERROR.LOGIN.PASSWORD: msg = "Password is invalid."; break;
+                case Constant.ERROR.UTIL.MYSQL: msg = "Something wrong with sql"; break;
                 default: msg = "Unknown Error.";
             }
             pw.write("<h1>" + msg + "</h1>");
