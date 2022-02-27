@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
         else {//登录失败
             response.setContentType("text/html");
             PrintWriter pw = response.getWriter();
-            String msg = "";
+            String msg;
             switch (result){
                 case Constant.ERROR.LOGIN.FRONT: msg = "Id or Name is invalid."; break;
                 case Constant.ERROR.LOGIN.PASSWORD: msg = "Password is invalid."; break;
