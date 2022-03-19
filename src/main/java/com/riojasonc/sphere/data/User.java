@@ -2,7 +2,7 @@ package com.riojasonc.sphere.data;
 
 public class User{
     public static final int nameMaxLength = 24;
-    public static final int passwordMaxLength = 24;
+    public static final int passwordMaxLength = 100;
 
     public long id;
     public String name;

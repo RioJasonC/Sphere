@@ -7,8 +7,8 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="Sphere-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="Sphere" />
+    <root id="archive" name="Sphere-1.0.war">
+      <element id="artifact" artifact-name="Sphere:war exploded" />
     </root>
   </artifact>
 </component>

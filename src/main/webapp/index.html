@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge, chrome=1">
+    <title>Sphere</title>
+
+    <link rel="stylesheet" href="css/index.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <script src="js/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="js/lib/aes/root/aes.min.js"></script>
+    <script src="js/lib/aes/aes.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+<nav>
+    <div class="logo"><a href="https://stars.chromeexperiments.com/" target="_blank">探索</a></div>
+    <div class="nav-links">
+        <ul>
+            <li>
+                <!-- QQ -->
+                <a href="http://wpa.qq.com/msgrd?v=3&uin=185248912&site=qq&menu=yes" target="_blank">
+                    <image src="img/qq.png" class="link-img" alt=""></image>
+                </a>
+            </li>
+            <li>
+                <!-- Bilibili -->
+                <a href="https://space.bilibili.com/1201180618" target="_blank">
+                    <image src="img/bilibili.png" class="link-img" alt=""></image>
+                </a>
+            </li>
+            <li>
+                <!-- Github -->
+                <a href="https://github.com/RioJasonC" target="_blank">
+                    <image src="img/github.png" class="link-img" alt=""></image>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<section id="sectionone" class="screen">
+    <!-- Background -->
+    <div id="scene" class="total-background">
+        <div data-depth="0.1" class="background" >
+            <img src="img/background.png" alt=""/>
+        </div>
+        <div data-depth="0.2" class="rock1">
+            <img src="img/rock.png" alt="">
+        </div>
+        <div data-depth="1.2" class="earth">
+            <img src="img/earth.png" alt="">
+        </div>
+        <div data-depth="0.25" class="text">
+            <h1>Sphere</h1>
+        </div>
+        <div data-depth="0.4" class="mid">
+            <img src="img/mid.png" alt="">
+        </div>
+        <div data-depth="0.1" class="fore">
+            <img src="img/foreground.png" alt="">
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div class="login">
+        <div class="login-mod-btn">
+            <button id="switch-btn-left" class="switch-btn switch-btn-left">登录</button>
+            <button id="switch-btn-right" class="switch-btn switch-btn-right">注册</button>
+        </div>
+
+        <!-- Login Main Form -->
+        <div class="login-center clearfix">
+            <form class="login-form">
+                <div id="login-center-form" class="login-center-form">
+                    <div class="login-center-img">
+                        <img src="img/name.png" alt="">
+                    </div>
+                    <div class="login-center-input">
+                        <input type="text" id="login-center-id" name="id" minlength="1" maxlength="24" placeholder="用户名或id"  required="required" onfocus="this.placeholder=''" onblur="this.placeholder='用户名或id'">
+                    </div>
+
+                    <div class="login-center-img">
+                        <img src="img/password.png" alt="">
+                    </div>
+                    <div class="login-center-input">
+                        <input type="password" id="login-center-password" minlength="1" maxlength="24" name="password" placeholder="密码" required="required" onfocus="this.placeholder=''" onblur="this.placeholder='密码'">
+                    </div>
+
+                    <div class="login-center-img login-center-cdkey">
+                        <img src="img/cdkey.png" alt="">
+                    </div>
+                    <div class="login-center-input login-center-cdkey">
+                        <input type="text" id="login-center-cdkey" name="cdkey" minlength="19" maxlength="19" placeholder="cdkey" required="required" onfocus="this.placeholder=''" onblur="this.placeholder='cdkey'">
+                    </div>
+                    <script type="text/javascript">$(".login-center-cdkey").hide()</script>
+                </div>
+
+                <div class="login-center-submit">
+                    <button type="button" class="login-center-input-btn">登录</button>
+                </div>
+
+                <div class="login-center-forget">
+                    <a class="login-center-forget-text" href="/textOutput?text=请联系管理员" target="_blank">忘记密码？</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NetEase -->
+    <div class="player-container">
+        <iframe id="player" class="player" frameborder="no" border="0" marginwidth="0" marginheight="0" width=360 height=330 src="//music.163.com/outchain/player?type=0&id=7325735947&auto=0&height=430"></iframe>
+    </div>
+
+    <!-- Beian -->
+    <div class="beian-container" style="width:300px;margin:0 auto; padding:20px 0;">
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51130402000096" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="img/Important/gongan.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">川公网安备 51130402000096号</p></a>
+    </div>
+</section>
+
+<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: "Roboto";
+    list-style: none;
+    box-sizing: border-box;
+    background: black;
+}
+
+nav {
+    position: fixed;
+    z-index: 100;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+}
+
+.logo {
+    color: #fff;
+    font-size: 16px;
+}
+
+.logo a:link {
+    color: white;
+    text-decoration: none;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.logo a:visited {
+    color: white;
+}
+
+.logo a:hover {
+    color: dodgerblue;
+}
+
+.logo a:active {
+    color: white;
+    transition: all 0s;
+    -moz-transition: all 0s;
+    -webkit-transition: all 0s;
+    -o-transition: all 0s;
+}
+
+nav .nav-links ul {
+    display: flex;
+    flex-direction: row;
+}
+
+nav .nav-links ul li {
+    padding: 0 2px;
+    list-style: none;
+}
+
+nav .nav-links ul li img {
+    transform: scale(0.45);
+}
+
+.link-img {
+    width: 80px;
+    height: 80px;
+    float: left;
+    border-radius: 50%;
+    margin-left: -50px;
+    margin-right: 10px;
+}
+/*------ player ------*/
+.player-container {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+/*------ player ------*/
+
+/*------ stars ------*/
+section {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.total-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.background img {
+    width: 110vw;
+    height: 110vh;
+    filter: brightness(0.8);
+}
+
+.rock1 {
+    position: absolute !important;
+    left: 16% !important;
+    top: 20% !important;
+}
+
+.rock1 img {
+    width: 40%;
+    filter: brightness(0.5);
+}
+
+.text h1 {
+    font-family: "AlphaCentauri" !important;
+    font-size: 5vw;
+    color: #fff;
+    letter-spacing: 1vw;
+    position: absolute;
+    top: 4vh;
+    left: 24vw;
+}
+
+.earth img {
+    width: 360px;
+    height: 360px;
+    position: absolute;
+    left: 23vw;
+    top: 25vh;
+    z-index: 1;
+    filter: brightness(0.7);
+}
+
+.mid {
+    left: -10% !important;
+    bottom: -10% !important;
+    top: unset !important;
+}
+
+.mid img {
+    width: 100%;
+    z-index: 2;
+    left: -20px;
+    top: 20vh !important;
+    filter: brightness(0.8);
+}
+
+.fore {
+    right: -50px !important;
+    bottom: -200px !important;
+    top: 0 !important;
+    left: unset !important;
+}
+
+.fore img {
+    width: 400px;
+    height: 110vh;
+    z-index: 3;
+    filter: brightness(0.5);
+}
+/*------ stars ------*/
+
+/*------ login ------*/
+.login {
+    z-index: 2;
+    position: absolute;
+    width: 350px;
+    height: 400px;
+    border-radius: 5px;
+    background: white;
+    box-shadow: gray;
+    top: 24%;
+    left: 72%;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.login-center {
+    width: 90%;
+    height: 80%;
+    box-sizing: border-box;
+    padding: 5% 10% 0;
+    margin-left: 5%;
+    border-left: 1px solid dodgerblue;
+    border-right: 1px solid dodgerblue;
+    border-bottom: 1px solid dodgerblue;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.login-mod-btn {
+    width: 90%;
+    height: 10%;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.switch-btn {
+    width: 50%;
+    height: 100%;
+    background: none;
+    box-sizing: border-box;
+    border-radius: 5px 5px 0 0;
+    border: 1px solid dodgerblue;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    cursor: pointer;
+}
+
+.switch-btn-left {
+    float: left;
+    color: white;
+    background-color: dodgerblue;
+}
+
+.switch-btn-right {
+    float: right;
+    color: dodgerblue;
+    background-color: white;
+}
+
+.login-form {
+    width: 100%;
+    height: 100%;
+}
+
+.login-center-form {
+    width: 100%;
+    height: 40%;
+    margin-top: 5%;
+}
+
+.login-center-img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+    display: block;
+    float: left;
+}
+
+.login-center-img>img {
+    width: 100%;
+    height: 100%;
+}
+
+.login-center-input {
+    width: 200px;
+    height: 30px;
+    margin-bottom: 15px;
+    display: block;
+    float: right;
+}
+
+.login-center-input input {
+    z-index: 2;
+    transition: all 0.5s;
+    padding-left: 3%;
+    color: gray;
+    width: 100%;
+    height: 30px;
+    font-size: small;
+    padding-top: 1%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    box-sizing: border-box;
+    outline: none;
+    position: relative;
+}
+
+.login-center-input input:focus {
+    border: 1px solid dodgerblue;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.login-center-input-btn {
+    width: 80%;
+    height: 20%;
+    margin: 25% 10% 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: medium;
+    color: dodgerblue;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid dodgerblue;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    cursor: pointer;
+}
+
+.login-center-input-btn:hover {
+    color: white;
+    background-color: dodgerblue;
+}
+
+.login-center-input-btn:active {
+    color: dodgerblue;
+    background-color: rgb(200, 200, 200);
+    transition: all 0s;
+    -moz-transition: all 0s;
+    -webkit-transition: all 0s;
+    -o-transition: all 0s;
+}
+
+.login-center-forget {
+    width: 100%;
+    height: 5%;
+}
+
+.login-center-forget a:link {
+    color: gray;
+    text-decoration: none;
+}
+
+.login-center-forget a:visited {
+    color: gray;
+}
+
+.login-center-forget a:hover {
+    color: dodgerblue;
+}
+
+.login-center-forget a:active {
+    color: gray;
+}
+
+.login-center-forget-text {
+    float: right;
+    font-size: small;
+}
+/*------ login ------*/
+
+/*------ beian ------*/
+.beian-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+/*------ beian ------*/
+
+/*------ animation ------*/
+@keyframes loginProcessAnimation {
+    33% {transform: rotateY(180deg);}
+    67% {transform: rotateZ(180deg);}
+}
+/*------ animation ------*/
