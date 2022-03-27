@@ -1,8 +1,10 @@
-package com.riojasonc.sphere.lib;
+package com.riojasonc.sphere.lib.util.cipher;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class AES {
     public static final String BASICKEY = "RioJasonCTsk5410";
@@ -44,7 +46,7 @@ public class AES {
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), "AES"));
 
-        return cipher.doFinal(content.getBytes("utf-8"));
+        return cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
     }
 
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {

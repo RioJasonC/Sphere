@@ -1,4 +1,4 @@
-package com.riojasonc.sphere.lib;
+package com.riojasonc.sphere.lib.util.cipher;
 
 public class Hash {
     /*

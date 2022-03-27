@@ -1,0 +1,88 @@
+body {
+    cursor: url("/source/pointer/Pointer.cur"), auto;
+}
+
+/* 十字线 */
+.Cursor-CrossHair:hover {
+    cursor: url("/source/pointer/Cross.cur"), crosshair;
+}
+
+/* 链接 */
+.Cursor-Pointer:hover {
+    cursor: url("/source/pointer/Link.cur"), pointer;
+}
+a:hover {
+    cursor: url("/source/pointer/Link.cur"), pointer;
+}
+
+/* 拖动移动 */
+.Cursor-Move:hover {
+    cursor: url("/source/pointer/Move.cur"), move;
+}
+
+/* 沿垂直方向方向移动边缘 */
+.Cursor-N-Resize:hover {
+    cursor: url("/source/pointer/Vert.cur"), n-resize;
+}
+.Cursor-S-Resize:hover {
+    cursor: url("/source/pointer/Vert.cur"), s-resize;
+}
+
+/* 沿水平方向移动边缘 */
+.Cursor-E-Resize:hover {
+    cursor: url("/source/pointer/Horz.cur"), e-resize;
+}
+.Cursor-W-Resize:hover {
+    cursor: url("/source/pointer/Horz.cur"), w-resize;
+}
+
+/* 沿13象限方向移动边缘 */
+.Cursor-NE-Resize:hover {
+    cursor: url("/source/pointer/Dgn2.cur"), ne-resize;
+}
+.Cursor-SW-Resize:hover {
+    cursor: url("/source/pointer/Dgn2.cur"), sw-resize;
+}
+
+/* 沿24象限方向移动边缘 */
+.Cursor-NW-Resize:hover {
+    cursor: url("/source/pointer/Dgn1.cur"), nw-resize;
+}
+.Cursor-SE-Resize:hover {
+    cursor: url("/source/pointer/Dgn1.cur"), se-resize;
+}
+
+/* 文本输入 */
+.Cursor-Text:hover {
+    cursor: url("/source/pointer/Text.cur"), text;
+}
+
+/* 等待 */
+.Cursor-Wait:hover {
+    cursor: url("/source/pointer/Work.ani"), wait;
+}
+
+/* 帮助 */
+.Cursor-Help:hover {
+    cursor: url("/source/pointer/Help.cur"), help;
+}
+
+/* 不可用的 */
+.Cursor-Unavailable:hover {
+    cursor: url("/source/pointer/Unavailiable.cur"), not-allowed;
+}
+
+/* 可供选择的 */
+.Cursor-Alternate:hover {
+    cursor: url("/source/pointer/Alternate.cur"), auto;
+}
+
+/* 忙碌 */
+.Cursor-Busy:hover {
+    cursor: url("/source/pointer/Busy.cur"), progress;
+}
+
+/* Hand */
+.Cursor-Hand:hover {
+    cursor: url("/source/pointer/Hand.cur"), auto;
+}

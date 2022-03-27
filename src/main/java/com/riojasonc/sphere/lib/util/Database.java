@@ -6,12 +6,7 @@ import com.riojasonc.sphere.data.User;
 import com.riojasonc.sphere.global.CONSTANT;
 import net.sf.json.JSONObject;
 
-/*
-* 请求所返回的数据前缀约定：
-* \u5410 在合法的前提下，服务器是否成功返回正确数据（满足为Success，否则为为Error）
-* \u5420 客户端所请求的数据是否存在等（满足为Success，否则为Error）
- */
-public class UtilDatabase {
+public class Database {
     private static final String user = "root";
     private static final String Driver = "com.mysql.cj.jdbc.Driver";
 
@@ -62,15 +57,14 @@ public class UtilDatabase {
         }
     } //激活通行证（账号）
 
-    public static int loginCheck(Object inputFront, String inputPassword) throws SQLException {
-        boolean mod = inputFront instanceof Long; //true代表id,false代表name
+    public static int loginCheck(Long id, String inputPassword) throws SQLException {
         try(Connection conn = connectionGet()){
-            try(PreparedStatement ps = conn.prepareStatement(mod ? "SELECT password FROM user_info WHERE id=?" : "SELECT password FROM user_info WHERE name=?")){
-                ps.setObject(1, inputFront);
+            try(PreparedStatement ps = conn.prepareStatement("SELECT password FROM user_info WHERE id=?")){
+                ps.setObject(1, id);
 
                 try(ResultSet rs = ps.executeQuery()){
                     if(!rs.next()) {
-                        return CONSTANT.ERROR.LOGIN.FRONT; //id或者name不存在
+                        return CONSTANT.ERROR.LOGIN.FRONT; //id不存在
                     }
                     String password = rs.getString(1);
                     return inputPassword.equals(password) ? CONSTANT.SUCCESS : CONSTANT.ERROR.LOGIN.PASSWORD;//密码错误
@@ -124,6 +118,7 @@ public class UtilDatabase {
         try(Connection conn = connectionGet()){
             try(PreparedStatement ps = conn.prepareStatement("INSERT INTO user_info (id, type, name, password, cdkey_id, gender) VALUES (?, ?, ?, ?, ?, ?)")){
                 ps.setObject(1, id);
+                System.out.println(name);
                 ps.setObject(2, license.userType);
                 ps.setObject(3, name);
                 ps.setObject(4, password);
@@ -137,10 +132,12 @@ public class UtilDatabase {
     } //注册账号
 
     /*
+     * 通过用户昵称获取id
+     *
      * @param 用户名或id
      * @return Object 如果成功则返回Long型，失败则返回String型
      */
-    public static Object getIdByName(String name) throws SQLException {
+    public static Object getIdByName(String name){
         try(Connection conn = connectionGet()) {
             try(PreparedStatement ps = conn.prepareStatement("SELECT id FROM user_info WHERE name=?")) {
                 ps.setObject(1, name);
@@ -151,6 +148,7 @@ public class UtilDatabase {
                     }
                     else {
                         PreparedStatement ps0 = conn.prepareStatement("SELECT * FROM user_info WHERE id=?");
+                        ps0.setObject(1, name);
                         ResultSet rs0 = ps0.executeQuery();
 
                         return rs0.next() ? Long.parseLong(name) : CONSTANT.SERVER_RESPONSE.DATA.FAILURE;
@@ -158,6 +156,11 @@ public class UtilDatabase {
                 }
             }
         }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return CONSTANT.SERVER_RESPONSE.DATA.FAILURE;
     } //通过用户昵称获取Id
 
     /*
@@ -169,7 +172,7 @@ public class UtilDatabase {
         JSONObject responseJson = new JSONObject();
 
         if(id instanceof String) {
-            responseJson.put("ResponseStatus", "Error");
+            responseJson.put("Status", "Error");
             responseJson.put("ErrorType", "InvalidParam"); //无效的参数
             return responseJson;
         }
@@ -187,13 +190,13 @@ public class UtilDatabase {
                         cdkey_id = rs.getLong(1);
                     }
                     else {
-                        responseJson.put("ResponseStatus", "Error");
+                        responseJson.put("Status", "Error");
                         responseJson.put("ErrorType", "InvalidParam"); //无效的参数
                         return responseJson;
                     }
                 }
             }
-            responseJson.put("ResponseStatus", "Success");
+            responseJson.put("Status", "Success");
 
             for(int i = 0; i < q.length; i++) {
                 String[] str = q[i].split(".");

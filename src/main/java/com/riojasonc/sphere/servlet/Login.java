@@ -1,65 +1,78 @@
 package com.riojasonc.sphere.servlet;
 
 import com.riojasonc.sphere.global.CONSTANT;
-import com.riojasonc.sphere.lib.AES;
-import com.riojasonc.sphere.lib.Hash;
-import com.riojasonc.sphere.lib.util.UtilDatabase;
+import com.riojasonc.sphere.lib.util.cipher.AES;
+import com.riojasonc.sphere.lib.util.cipher.RSA;
+import com.riojasonc.sphere.lib.util.Database;
 import net.sf.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
-import static com.riojasonc.sphere.lib.BasicServletFunctions.getJSONFromServletRequest;
+import static com.riojasonc.sphere.lib.BasicFunctions.flushErrorStatus;
+import static com.riojasonc.sphere.lib.BasicFunctions.getJSONFromServletRequest;
+import static com.riojasonc.sphere.lib.util.Database.getIdByName;
 
 @WebServlet(name = "Login", urlPatterns = "/login")
 public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        this.doPost(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
 
         JSONObject requestJson = getJSONFromServletRequest(request);
+        if(requestJson == null) {
+            return;
+        }
         JSONObject responseJson = new JSONObject();
-        PrintWriter pw = null;
-
-        String id = requestJson.getString("id");
-        String password = AES.decrypt(requestJson.getString("password"), AES.keyComplete(AES.encrypt(id, AES.BASICKEY)));
-        password = AES.encrypt(password, AES.BASICKEY0) + Hash.RSHash(password);
-
-        try {
-            pw = response.getWriter();
+        PrintWriter pw = response.getWriter();
+        HttpSession session = request.getSession();
+        if(session.isNew()) {
+            return;
         }
-        catch (IOException e) {
+        Object obj = getIdByName(requestJson.getString("id"));
+        if(obj instanceof String) {
+            flushErrorStatus(pw, "Id or Name is invalid.");
+            return;
+        }
+
+        String id = String.valueOf(obj);
+        String password = requestJson.getString("password");
+        try {
+            password = AES.decrypt(password, RSA.decrypt(requestJson.getString("AESKey"), RSA.getPrivateKey((String) session.getAttribute("SecretKey"))));
+        }
+        catch (Exception e) {
+            flushErrorStatus(pw, e.getMessage());
             e.printStackTrace();
+            return;
         }
 
-        int result = -1;
+        int result;
         try {
-            result = isInteger(id) ? UtilDatabase.loginCheck(Long.parseLong(id), password) : UtilDatabase.loginCheck(id, password);
+            result = Database.loginCheck(Long.parseLong(id), password);
         }
         catch (SQLException e) {
-            responseJson.put("ResponseStatus", "Error");
-            responseJson.put("ErrorType", "SQLException");
-            pw.print(responseJson);
-            pw.flush();
-            pw.close();
+            flushErrorStatus(pw, e.getMessage());
             e.printStackTrace();
+            return;
         }
 
-        responseJson.put("ResponseStatus", "Success");
         if(result == CONSTANT.SUCCESS){//登录成功
             responseJson.put("Status", "Success");
+            responseJson.put("id", AES.encrypt(id, AES.BASICKEY));
+
+            //session保存对应的id
+            session.setAttribute("id", id);
         }
         else {//登录失败
             String msg;
@@ -76,9 +89,4 @@ public class Login extends HttpServlet {
         pw.flush();
         pw.close();
     }
-
-    public static boolean isInteger(String str) {
-        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");//正则表达式，判断是否为整数
-        return pattern.matcher(str).matches();
-    }//判断是否为整数
 }

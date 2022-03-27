@@ -3,76 +3,77 @@ package com.riojasonc.sphere.servlet;
 import com.riojasonc.sphere.data.License;
 import com.riojasonc.sphere.data.User;
 import com.riojasonc.sphere.global.CONSTANT;
-import com.riojasonc.sphere.lib.AES;
-import com.riojasonc.sphere.lib.Hash;
-import com.riojasonc.sphere.lib.util.UtilDatabase;
+import com.riojasonc.sphere.lib.util.Database;
+import com.riojasonc.sphere.lib.util.cipher.AES;
+import com.riojasonc.sphere.lib.util.cipher.RSA;
 import net.sf.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
-import static com.riojasonc.sphere.lib.BasicServletFunctions.getJSONFromServletRequest;
+import static com.riojasonc.sphere.lib.BasicFunctions.flushErrorStatus;
+import static com.riojasonc.sphere.lib.BasicFunctions.getJSONFromServletRequest;
 
 @WebServlet(name = "Signup", urlPatterns = "/signup")
 public class Signup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        this.doPost(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
 
         JSONObject requestJson = getJSONFromServletRequest(request);
+        if(requestJson == null) {
+            return;
+        }
         JSONObject responseJson = new JSONObject();
-        PrintWriter pw = null;
+        PrintWriter pw = response.getWriter();
+        HttpSession session = request.getSession();
+        if(session.isNew()) {
+            return;
+        }
 
         User user = new User(requestJson.getString("id"), requestJson.getString("password"), new License(requestJson.getString("cdkey")));
-        user.password = AES.decrypt(requestJson.getString("password"), AES.keyComplete(AES.encrypt(user.name, AES.BASICKEY)));
-        user.password = AES.encrypt(user.password, AES.BASICKEY0) + Hash.RSHash(user.password);
-
         try {
-            pw = response.getWriter();
+            user.password = AES.decrypt(user.password, RSA.decrypt(requestJson.getString("AESKey"), RSA.getPrivateKey((String) session.getAttribute("SecretKey"))));
         }
-        catch (IOException e) {
+        catch (Exception e) {
+            flushErrorStatus(pw, e.getMessage());
             e.printStackTrace();
+            return;
         }
 
         int result = -1;
         try {
-            result = UtilDatabase.signupCheck(user);
+            result = Database.signupCheck(user);
         }
-        catch (SQLException e) {
-            responseJson.put("ResponseStatus", "Error");
-            responseJson.put("ErrorType", "SQLException");
-            pw.print(responseJson);
-            pw.flush();
-            pw.close();
+        catch (Exception e) {
+            flushErrorStatus(pw, e.getMessage());
             e.printStackTrace();
+            return;
         }
 
         if(result == CONSTANT.SUCCESS){//注册成功
             try {
-                UtilDatabase.signupAccount(user);
+                Database.signupAccount(user);
             }
-            catch (SQLException e) {
-                responseJson.put("ResponseStatus", "Error");
-                responseJson.put("ErrorType", "SQLException");
-                pw.print(responseJson);
-                pw.flush();
-                pw.close();
+            catch (Exception e) {
+                flushErrorStatus(pw, e.getMessage());
                 e.printStackTrace();
             }
 
-            responseJson.put("ResponseStatus", "Success");
             responseJson.put("Status", "Success");
+            pw.print(responseJson);
+            pw.flush();
+            pw.close();
         }
         else {//注册失败
             String msg = null;
@@ -85,13 +86,7 @@ public class Signup extends HttpServlet {
                 default: msg = "Unknown Error.";
             }
 
-            responseJson.put("ResponseStatus", "Success");
-            responseJson.put("Status", "Error");
-            responseJson.put("ErrorType", msg);
+            flushErrorStatus(pw, msg);
         }
-
-        pw.print(responseJson);
-        pw.flush();
-        pw.close();
     }
 }

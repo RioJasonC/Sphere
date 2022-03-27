@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.BitSet;
 import java.util.Calendar;
 
-@WebServlet(name = "CDKeyGenerator", urlPatterns = "/CDKeyGenerator")
+@WebServlet(name = "CDKeyGenerator", urlPatterns = "/function/CDKey/generator")
 public class CDKeyGenerator extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

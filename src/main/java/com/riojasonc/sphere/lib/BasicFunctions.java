@@ -1,13 +1,15 @@
 package com.riojasonc.sphere.lib;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
-public class BasicServletFunctions {
+public class BasicFunctions {
     /*
      * param HttpServletRequest
      * return JSONObject
@@ -27,7 +29,29 @@ public class BasicServletFunctions {
             e.printStackTrace();
         }
 
-        return JSONObject.fromObject(sb.toString());
+        JSONObject json = null;
+        try {
+            json = JSONObject.fromObject(sb.toString());
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return json;
     }
 
+    /*
+     * 服务器返回错误状态
+     *
+     * @param PrintWriter
+     */
+    public static void flushErrorStatus(PrintWriter pw, String str) {
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("Status", "Error");
+        responseJson.put("ErrorType", str);
+        pw.print(responseJson);
+        pw.flush();
+        pw.close();
+    }
 }
