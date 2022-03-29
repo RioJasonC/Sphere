@@ -39,7 +39,9 @@ public class LinkToSession extends HttpServlet {
                 //向客户端传输RSA公钥和SessionId
                 responseJson.put("Status", "Success");
                 responseJson.put("ExistStatus", "New");
-                responseJson.put("PublicKey", "-----BEGIN PUBLIC KEY-----\n" + publicKey + "\n-----END PUBLIC KEY-----");
+                String publicKey2 = "-----BEGIN PUBLIC KEY-----\n" + publicKey + "\n-----END PUBLIC KEY-----";
+                response.setHeader("Set-Cookie", "PublicKey=" + publicKey2 + "; path=/; SameSite=Lax;");
+                responseJson.put("PublicKey", publicKey2);
 
                 session.setAttribute("SecretKey", privateKey);
                 session.setAttribute("PublicKey", publicKey);

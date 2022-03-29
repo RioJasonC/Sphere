@@ -10,10 +10,8 @@ public class Database {
     private static final String user = "root";
     private static final String Driver = "com.mysql.cj.jdbc.Driver";
 
-    //private static final String url = "jdbc:mysql://localhost:3306/sphere?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-    //private static final String password = "MySQL5410*";
     private static final String url = "jdbc:mysql://localhost/sphere?useSSL=false&characterEncoding=utf8";
-    private static final String password = "MySQL5410";
+    private static final String password = "";
 
     private final boolean blabla = init();
 
@@ -163,7 +161,7 @@ public class Database {
         return CONSTANT.SERVER_RESPONSE.DATA.FAILURE;
     } //通过用户昵称获取Id
 
-    /*
+    /* 获取信息
      * @param JSONObject 需要获取的数据
      * @return JSONObject 对应的数据
      */
@@ -297,4 +295,44 @@ public class Database {
         return responseJson;
     }
 
+    /* 获取Hitokoto
+     * @return JSONObject
+     */
+    public static JSONObject getHitokoto(JSONObject requestJSON) throws SQLException {
+        JSONObject responseJson = new JSONObject();
+
+        try(Connection conn = connectionGet()){
+            if("getHitokoto".equals(requestJSON.getString("mode"))) {
+                long id = requestJSON.getLong("id");
+                try(PreparedStatement ps = conn.prepareStatement("SELECT hitokoto, from_who, hfrom FROM hitokoto WHERE id=?")){
+                    ps.setObject(1, Long.toString(id));
+                    try(ResultSet rs = ps.executeQuery()){
+                        if(!rs.next()) {
+                            responseJson.put("hitokoto", "Error");
+                        }
+                        else {
+                            responseJson.put("hitokoto", rs.getString(1));
+                            String temp = rs.getString(2);
+                            responseJson.put("from_who", temp == null ? "null" : temp);
+                            temp = rs.getString(3);
+                            responseJson.put("hfrom", temp == null ? "null" : temp);
+                        }
+                    }
+                }
+            }
+            else {
+                try(PreparedStatement ps = conn.prepareStatement("SELECT SUM(TABLE_ROWS) FROM `information_schema`.`tables` WHERE TABLE_NAME='hitokoto'")){
+                    try(ResultSet rs = ps.executeQuery()){
+                        if(!rs.next()) {
+                            responseJson.put("maxId", -1);
+                        }
+                        else {
+                            responseJson.put("maxId", rs.getLong(1));
+                        }
+                    }
+                }
+            }
+        }
+        return responseJson;
+    }
 }

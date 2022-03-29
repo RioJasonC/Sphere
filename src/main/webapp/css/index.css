@@ -3,7 +3,7 @@ body {
     padding: 0;
     overflow-x: hidden;
     overflow-y: hidden;
-    font-family: "Roboto";
+    font-family: "Roboto", serif;
     list-style: none;
     box-sizing: border-box;
     background: black;
@@ -20,12 +20,12 @@ nav {
     padding: 10px 30px;
 }
 
-.logo {
+.menu {
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
 }
 
-.logo a:link {
+.menu a:link {
     color: white;
     text-decoration: none;
     transition: all 0.5s;
@@ -34,15 +34,15 @@ nav {
     -o-transition: all 0.5s;
 }
 
-.logo a:visited {
+.menu a:visited {
     color: white;
 }
 
-.logo a:hover {
+.menu a:hover {
     color: dodgerblue;
 }
 
-.logo a:active {
+.menu a:active {
     color: white;
     transition: all 0s;
     -moz-transition: all 0s;
@@ -92,6 +92,8 @@ section {
     width: 100%;
     height: 100%;
     position: absolute;
+    user-select: none;
+    pointer-events: none;
 }
 
 .background img {
@@ -112,7 +114,7 @@ section {
 }
 
 .text h1 {
-    font-family: "AlphaCentauri" !important;
+    font-family: "AlphaCentauri", serif !important;
     font-size: 5vw;
     color: #fff;
     letter-spacing: 1vw;
@@ -208,7 +210,6 @@ section {
     -moz-transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
-    cursor: pointer;
 }
 
 .switch-btn-left {
@@ -297,7 +298,6 @@ section {
     -moz-transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
-    cursor: pointer;
 }
 
 .login-center-input-btn:hover {
@@ -342,6 +342,60 @@ section {
 }
 /*------ login ------*/
 
+/*------ hitokoto ------*/
+.hitokoto-container {
+    width: 600px;
+    height: 250px;
+    position: absolute;
+    right: 30%;
+    top: 36%;
+    background-color: transparent;
+    color: white;
+}
+
+.hitokoto-bracket {
+    font-size: 25px;
+    width: 25px;
+    height: 25px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.bracket-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.bracket-right {
+    position: absolute;
+    right: 0;
+}
+
+.hitokoto-refresh-status {
+    float: left;
+    height: 31px;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.hitokoto-author {
+    float: right;
+    height: 31px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, Arial, sans-serif;
+    color: rgba(255,255,255,0.80);
+    margin-top: 50px;
+}
+
+.hitokoto-word {
+    width: 550px;
+    font-size: 24px;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, Arial, sans-serif;;
+    margin-left: 32px;
+    margin-right: 32px;
+    padding-top: 25px;
+}
 /*------ beian ------*/
 .beian-container {
     position: absolute;

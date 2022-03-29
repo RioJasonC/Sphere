@@ -7,65 +7,32 @@ let loginPresentStatus = true; //"true" refers to login form, "false" refers to 
 let loginSwitchIsDone = false; //whether mouse up
 let tempLoginBtnStyleProps;
 let publicKey;
-let rootUrl = "/Sphere";
-
-//Link to Remote Server and get the session
-$.ajax({
-    url: rootUrl + "/lts",
-    type: "post",
-    success: function (response) {
-        if(response["Status"] === "Success") {
-            if (response["ExistStatus"] === "New") {
-                $.cookie("PublicKey", response["PublicKey"], {path: "/"});
-                publicKey = response["PublicKey"];
-            }
-            else {
-                publicKey = $.cookie("PublicKey");
-            }
-        }
-        else {
-            $(window).attr("location", rootUrl + "/function/text/output?text=" + response["ErrorType"]);
-        }
-    },
-    error: function () {
-        $(window).attr("location", rootUrl + "/function/text/output?text=Internal Server Error");
-    }
-});
-
-//Login Status Check
-$.ajax({
-    url: rootUrl + "/lsc",
-    type: "post",
-    data: JSON.stringify({
-        id: $.cookie("id")
-    }),
-    dataType: "json",
-    success: function (response) {
-        if(response["Status"] === "Success") {
-            $(window).attr("location", rootUrl + "/home.html");
-        }
-        else {
-            $.removeCookie("id");
-        }
-    },
-    error: function () {
-        $(window).attr("location", rootUrl + "/errorLog?" + "500");
-    }
-});
+let intervalData = {"hitokotoStatus": 4};
 
 $(document).ready(function() {
+    init();
     console.log("欢迎访问yyx的小站，如想注册账户，可以联系本人获取CDKey。");
     let switchBtn = $(".switch-btn");
+    hitokotoRefresh();
+
+    $(".hitokoto-selectable").hover(
+        function () {
+            clearInterval(intervalData["hitokotoStatus"]);
+        },
+        function () {
+            hitokotoStatusRefreshStart();
+        }
+    )
 
     switchBtn.hover(
         function() {
             tempLoginBtnStyleProps = $(this).css([
-                "color",
-                "background-color",
                 "transition",
                 "-moz-transition",
                 "-webkit-transition",
-                "-o-transition"
+                "-o-transition",
+                "color",
+                "background-color"
             ]);
 
             $(this).css({
@@ -79,10 +46,9 @@ $(document).ready(function() {
                 return;
             }
 
-            let This = $(this);
-            $.each(tempLoginBtnStyleProps, function(prop, value) {
-                This.css(prop, value);
-            });
+            for(let prop in tempLoginBtnStyleProps) {
+                $(this).css(prop, tempLoginBtnStyleProps[prop]);
+            }
         });
 
     switchBtn.mousedown(function() {
@@ -104,11 +70,9 @@ $(document).ready(function() {
 
         if(loginPresentStatus) {
             if($(this).attr("id") === "switch-btn-left") {
-                let This = $(this);
-                $.each(tempLoginBtnStyleProps, function(prop, value) {
-                    This.css(prop, value);
-                });
-                return;
+                for(let prop in tempLoginBtnStyleProps) {
+                    $(this).css(prop, tempLoginBtnStyleProps[prop]);
+                }
             }
             else { //From login form to signup form
                 loginPresentStatus = false;
@@ -135,11 +99,9 @@ $(document).ready(function() {
         }
         else {
             if($(this).attr("id") === "switch-btn-right") {
-                let This = $(this);
-                $.each(tempLoginBtnStyleProps, function(prop, value) {
-                    This.css(prop, value);
-                });
-                return;
+                for(let prop in tempLoginBtnStyleProps) {
+                    $(this).css(prop, tempLoginBtnStyleProps[prop]);
+                }
             }
             else { //From signup form to log in form
                 loginPresentStatus = true;
@@ -248,11 +210,10 @@ $(document).ready(function() {
                         $("#login-center-id").val("");
                         $("#login-center-password").val("");
                         if (response["Status"] === "Success") {
-                            $.cookie("id", response["id"], {path: "/"})
                             loginProcessAnimateExit();
                             $.growl.notice({title: "提醒", message: "登录成功，页面跳转中...", location: "tc"});
                             setTimeout(function () {
-                                $(window).attr("location", rootUrl + "/function/text/output?text=登录成功");
+                                location.replace(rootUrl + "/home.html");
                             }, 1000);
                         }
                         else {
@@ -286,7 +247,7 @@ $(document).ready(function() {
                             loginProcessAnimateExit();
                             $.growl.notice({title: "提醒", message: "注册成功，页面跳转中...", location: "tc"});
                             setTimeout(function () {
-                                $(window).attr("location", rootUrl + "/function/text/output?text=注册成功");
+                                location.replace(rootUrl + "/home.html");
                             }, 1000);
                         }
                         else {
@@ -303,6 +264,51 @@ $(document).ready(function() {
         }, 1000);
     });
 });
+
+function init() {
+    //Link to Remote Server and get the session
+    $.ajax({
+        url: rootUrl + "/lts",
+        type: "post",
+        success: function (response) {
+            if(response["Status"] === "Success") {
+                if (response["ExistStatus"] === "New") {
+                    publicKey = response["PublicKey"];
+                }
+                else {
+                    publicKey = $.cookie("PublicKey");
+                }
+            }
+            else {
+                $(window).attr("location", rootUrl + "/function/text/output?text=" + response["ErrorType"]);
+            }
+        },
+        error: function () {
+            $(window).attr("location", rootUrl + "/function/text/output?text=Internal Server Error");
+        }
+    });
+
+    //Login Status Check
+    $.ajax({
+        url: rootUrl + "/lsc",
+        type: "post",
+        data: JSON.stringify({
+            id: $.cookie("id")
+        }),
+        dataType: "json",
+        success: function (response) {
+            if(response["Status"] === "Success") {
+                $(window).attr("location", rootUrl + "/home.html");
+            }
+            else {
+                $.removeCookie("id");
+            }
+        },
+        error: function () {
+            $(window).attr("location", rootUrl + "/errorLog?" + "500");
+        }
+    });
+}
 
 function loginProcessAnimate() {
     $(".login-center").hide();

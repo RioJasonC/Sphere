@@ -68,8 +68,10 @@ public class Login extends HttpServlet {
         }
 
         if(result == CONSTANT.SUCCESS){//登录成功
+            id = AES.encrypt(id, AES.BASICKEY);
+            response.setHeader("Set-Cookie", "id=" + id + "; path=/; SameSite=Lax;");
             responseJson.put("Status", "Success");
-            responseJson.put("id", AES.encrypt(id, AES.BASICKEY));
+            responseJson.put("id", id);
 
             //session保存对应的id
             session.setAttribute("id", id);

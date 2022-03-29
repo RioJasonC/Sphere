@@ -7,22 +7,27 @@
     <title>Sphere</title>
 
     <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="css/pointer.css"/>
     <link rel="stylesheet" href="css/lib/jquery/jquery.growl.css" />
 
-    <script src="js/lib/ajax/libs/cipher/aes/aes.min.js"></script>
-    <script src="js/lib/ajax/libs/cipher/aes/aesF.js"></script>
+    <script src="js/CONSTANT.js"></script>
     <script src="js/lib/ajax/libs/cipher/jsencrypt/jsencrypt.min.js"></script>
     <script src="js/lib/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
-    <script src="js/lib/basic/randomString.js"></script>
     <script src="js/lib/jquery/jquery.min.js"></script>
     <script src="js/lib/jquery/jquery.cookie.min.js"></script>
     <script src="js/lib/jquery/jquery.growl.js"></script>
+    <script src="js/lib/ajax/libs/cipher/aes/aes.min.js"></script>
+    <script src="js/lib/ajax/libs/cipher/aes/aesF.js"></script>
+    <script src="js/lib/basic/randomString.js"></script>
+    <script src="js/hitokoto/hitokotorefresh.js"></script>
+    <script src="js/hitokoto/hitokoto.js"></script>
     <script src="js/beautify/click.js"></script>
 </head>
 <body>
 <nav>
-    <div class="logo"><a href="https://stars.chromeexperiments.com/" target="_blank">探索</a></div>
+    <div class="menu">
+        <a href="https://stars.chromeexperiments.com/" target="_blank">探索</a>
+        <a href="https://www.bilibili.com/video/BV1w44y1m79B" target="_blank">必看</a>
+    </div>
     <div class="nav-links">
         <ul>
             <li>
@@ -113,6 +118,15 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- Hitokoto -->
+    <div class="hitokoto-container">
+        <div class="hitokoto-bracket bracket-left">『</div>
+        <div class="hitokoto-word hitokoto-selectable"></div>
+        <div class="hitokoto-bracket bracket-right">』</div>
+        <div class="hitokoto-refresh-status"><canvas id="hitokoto-refresh-canvas" width="31px" height="31px">qwq</canvas></div>
+        <div class="hitokoto-author hitokoto-selectable"></div>
     </div>
 
     <!-- NetEase -->
